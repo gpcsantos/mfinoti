@@ -10,22 +10,22 @@
             $senha = $_REQUEST['txt_senha'];
             $senha2 = $_REQUEST['txt_senha2'];
             $acesso = $_REQUEST['cbo_acesso'];
-            if($_REQUEST["chk1"] == "on"){
+            if(!empty($_REQUEST["chk1"]) && $_REQUEST["chk1"] == "on"){
                 $chk1 = 1;
             }else{
                 $chk1 = 0;
             }
-            if($_REQUEST["chk2"] == "on"){
+            if(!empty($_REQUEST["chk2"]) && $_REQUEST["chk2"] == "on"){
                 $chk2 = 1;
             }else{
                 $chk2 = 0;
             }
-            if($_REQUEST["chk3"] == "on"){
+            if(!empty($_REQUEST["chk3"]) && $_REQUEST["chk3"] == "on"){
                 $chk3 = 1;
             }else{
                 $chk3 = 0;
             }
-            if($_REQUEST["chk4"] == "on"){
+            if(!empty($_REQUEST["chk4"]) && $_REQUEST["chk4"] == "on"){
                 $chk4 = 1;
             }else{
                 $chk4 = 0;
