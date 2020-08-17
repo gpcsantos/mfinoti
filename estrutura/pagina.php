@@ -1,7 +1,7 @@
 <?php
   $pageid = 9;
   include_once('../includes/conexao.php');
-  //include_once('../includes/autenticacao.php');
+  include_once('../includes/autenticacao.php');
 
 
 ?>

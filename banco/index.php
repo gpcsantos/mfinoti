@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-
 <?php
+  $pageid = 21;
   include_once('../includes/conexao.php');
   include_once('../includes/autenticacao.php');
 ?>
+<!DOCTYPE html>
 
 <html lang="pt-br">
 
@@ -333,7 +333,7 @@
 <div class="modal fade" id="modalExcluir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-        <form method="POST" action="banco_salvar.php">
+        <form method="POST" action="banco_deletar.php">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Aviso</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

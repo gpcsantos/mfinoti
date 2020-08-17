@@ -1,7 +1,7 @@
 <?php
   $pageid = 16;
   include_once('../includes/conexao.php');
-  //include_once('../includes/autenticacao.php');
+  include_once('../includes/autenticacao.php');
 
   if(isset($_GET["submit"])){
     if(base64_decode($_GET['submit'])=='alterar'){

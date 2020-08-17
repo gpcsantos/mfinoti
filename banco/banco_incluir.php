@@ -1,4 +1,5 @@
 <?php
+  $pageid = 23;
   include_once('../includes/conexao.php');
   include_once('../includes/autenticacao.php');
 ?>

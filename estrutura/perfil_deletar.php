@@ -1,7 +1,7 @@
 <?php
     $pageid = 18;
     include_once('../includes/conexao.php');
-   // include_once('../includes/autenticacao.php');
+    include_once('../includes/autenticacao.php');
 
     $msg = "";
     if(isset($_REQUEST['submit'])){ 

@@ -1,19 +1,12 @@
 <?php
-  $pageid = 10;
+  $pageid = 19;
   include_once('../includes/conexao.php');
   include_once('../includes/autenticacao.php');
 
-  if(isset($_GET["submit"])){
-    if(base64_decode($_GET['submit'])=='alterar'){
-      $id = base64_decode($_GET["id"]);
-      $sql = "SELECT * FROM tb_pagina WHERE pk_id=".$id;
-      $result = mysqli_query($con,$sql);
-      $row = mysqli_fetch_object($result);
-    }else{
-      header('location: pagina.php');
+  if(!empty($_GET)){
+    if(!empty($_GET['perfil'])){
+      $idPerfil = $_GET['perfil'];
     }
-  } else{
-    header('location: pagina.php');
   }
 
 ?>
@@ -35,6 +28,7 @@
 
   <!-- Custom styles for this template-->
   <link href="../css/sb-admin-2.css" rel="stylesheet">
+  
   <!-- Custom styles for this page -->
   <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
@@ -234,7 +228,7 @@
 
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">Páginas</h1>
+  <h1 class="h3 mb-0 text-gray-800">Relacionamento entre Perfil e Arquivos</h1>
   
 </div>
 
@@ -247,7 +241,7 @@
     <div class="card shadow mb-4">
       <!-- Card Header - Dropdown -->
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">Alterar página</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Perfil X Arquivos</h6>
         <div class="dropdown no-arrow">
           <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
@@ -263,71 +257,100 @@
       </div>
       <!-- Card Body -->
       <div class="card-body">
-        <form class="user" action="pagina_salvar.php" method="POST">
-              <div class="form-group row">
-                <div class="col-sm-12 mb-3 mb-sm-0">
-                  <input type="text" class="form-control form-control-lg" id="txt_arquivo" name="txt_arquivo" value="<?php echo $row->arquivo; ?>" placeholder="caminho/nome_do_arquivo" required>
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-sm-12 mb-3 mb-sm-0">
-                  <input type="text" class="form-control form-control-lg" id="txt_descricao" name="txt_descricao" value="<?php echo $row->descricao; ?>"placeholder="Descrição da página">
-                  <input type="hidden" name="id" value="<?php echo $row->pk_id; ?>">
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-sm-12 mb-6 mb-sm-0 text-center ">
-                <hr />
-                  <p class="bg-gradient-dark text-gray-100">Informe a baixo, quais as ações da página:</p>
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-sm-3 mb-3 mb-sm-0 text-center" >
-                  <label for="chk1">
-                    Create (incluir informações)<br>
-                    <?php $chk1 = ($row->c == 1) ? "checked ": ""; ?>
-                    <input type="checkbox" id="chk1" name="chk1" <?php echo $chk1; ?> class="btn btn-primary"/>
-                  </label>
-                </div>
-                <div class="col-sm-3 text-center">
-                  <label for="chk2">
-                  Read (ler informações)<br>
-                  <?php $chk1 = ($row->r == 1) ? "checked ": ""; ?>
-                    <input type="checkbox" id="chk2" name="chk2" <?php echo $chk1; ?> class="btn btn-primary"/>
-                  </label>
-                </div>
-                <div class="col-sm-3 text-center">
-                  <label for="chk3">
-                    Update (alterar informações)<br>
-                    <?php $chk1 = ($row->u == 1) ? "checked ": ""; ?>
-                      <input type="checkbox" id="chk3" name="chk3" <?php echo $chk1; ?> class="btn btn-primary"/>
-                  </label>
-                  
-                </div>
-                <div class="col-sm-3 text-center">
-                  <label for="chk4">
-                  Delete (apagar informações)<br>
-                  <?php $chk1 = ($row->d == 1) ? "checked ": ""; ?>
-                    <input type="checkbox" id="chk4" name="chk4" <?php echo $chk1; ?> class="btn btn-primary"/>
-                  </label>
-                  
-                </div>
-              </div>
-              <div class="col-sm-12 mb-6 mb-sm-0">
-                <hr />
-                  
-                </div>
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary" name="submit" value="alterar">SALVAR</button>
-                <button type="button" class="btn btn-danger" onclick="location.href='pagina.php';">CANCELAR</button>
-              </div>
+        <form class="user" action="perfil_arquivo_salvar.php" method="POST">
+          <div class="col-sm-12 mb-6 mb-sm-0 text-center ">
+            <hr />
+            <p class="bg-gradient-dark text-gray-100">Escolha o Perfil e, logo abaixo serão mostrados os arquivos que se relacionam ao perfil.</p>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-12 mb-3 mb-sm-0">
+              <select class="form-control form-control-lg" name="cbo_perfil" onchange="encaminha(this.value, '<?php echo base64_encode('rl'); ?>');" required>
+                  <option value="">-- Selecione um perfil de acesso de usuário --</option>
+                  <?php
+                    $sql = "SELECT * FROM tb_perfil ORDER BY perfil";
+                    $result = mysqli_query($con,$sql);
+                    while($row=mysqli_fetch_object($result)){
+                      if(!empty($_GET)){
+                        $chk = ($idPerfil == $row->pk_id) ? "selected" : "" ;
+                      }else{
+                        $chk = "";
+                      }
+                  ?>
+                        <option value="<?php echo $row->pk_id ;?>" <?php echo $chk ;?>><?php echo $row->perfil ;?></option>
+                  <?php
+                    }
+                  ?>
+              </select>
+            </div>
+          </div>
+          <?php if(!empty($_GET['perfil'])){ ?>
+          <div class="col-sm-12 mb-6 mb-sm-0 text-center ">
+            <hr />
+            <p class="bg-gradient-dark text-gray-100">Selecione as páginas quem irão compor o perfil escolhido.</p>
+          </div>
+          <div class="col-sm-12 mb-6 mb-sm-0"> 
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th scope="col">
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="checkTodos">
+                    <label class="custom-control-label" for="checkTodos">todos arquivos</label>
+                  </div>  
+
+                  </th>
+                  <th scope="col">Descrição</th>
+                </tr>
+              </thead>
+              <tbody>
+          <?php
+              $cont = 0;
+              $sql = "SELECT pk_id, arquivo, descricao FROM tb_pagina";
+              $result = mysqli_query($con, $sql);
+              while($row = mysqli_fetch_object($result)){
+                $cont += 1;
+                $sql = "SELECT * FROM rl_pagina_perfil WHERE fk_perfil = $idPerfil AND fk_pagina=".$row->pk_id;
+                $query = mysqli_query($con,$sql);
+                $chk = (mysqli_num_rows($query)==1) ? "checked" : "" ;
+                
+          ?>
+                <tr>
+                  <th scope="row">
+                    <div class="custom-control custom-switch">
+                      <input type="checkbox" name="chk<?php echo $cont;?>" <?php echo $chk;?> class="custom-control-input" id="sw<?php echo $cont;?>" value="<?php echo $row->pk_id ;?>">
+                      <label class="custom-control-label" for="sw<?php echo $cont;?>"><?php echo $row->pk_id .' - '. $row->arquivo;?></label>
+                    </div>
+                  </th>
+                  <td><?php echo $row->descricao?></td>
+                </tr>
+          <?php
+              }          
+          
+          ?>
+                
+
+              </tbody>
+            </table>
+            
+          </div>
+          <?php } ?>
+          <div class="col-sm-12 mb-6 mb-sm-0 text-center ">
+            <hr />
+            <p class="bg-gradient-dark text-gray-100">&nbsp;</p>
+          </div>
+          <div class="form-group">
+            <input type="hidden" name="cont" value="<?php echo $cont;?>">
+          <?php if(!empty($_GET['perfil'])){ ?>
+            <button type="submit" class="btn btn-primary" name="submit" value="incluir">SALVAR</button>
+            <button type="button" class="btn btn-danger" onclick="location.href='perfil_arquivo.php';">CANCELAR</button>
+            <button type="button" class="btn btn-danger" onclick="location.href='index.php';">VOLTAR</button>
+          <?php }else{ ?>
+            <button type="button" class="btn btn-danger" onclick="location.href='index.php';">VOLTAR</button>
+                       
+          <?php } ?>
+          </div>
               
-            </form> 
-
-
-
-
-
+        </form> 
       </div>
     </div>
   </div>            
@@ -383,8 +406,8 @@
     </div>
   </div>
 
-   <!-- Modal Mensagem -->
-   <div class="modal fade" id="modalMensagem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Modal Mensagem -->
+    <div class="modal fade" id="modalMensagem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -418,10 +441,13 @@
             $('#modalMensagem').modal('show');
         <?php } ?>
     });
-  </script>
- 
-
-
-</body>
+    $("#checkTodos").click(function(){
+      $('input:checkbox').not(this).prop('checked', this.checked);
+    });
+    function encaminha(id,v){ 
+      window.location.href='perfil_arquivo.php?perfil='+id; 
+    }  
+    </script>
+  </body>
 
 </html>

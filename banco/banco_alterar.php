@@ -1,6 +1,5 @@
-<!DOCTYPE html>
-
 <?php
+  $pageid = 22;
   include_once('../includes/conexao.php');
   include_once('../includes/autenticacao.php');
   if(isset($_GET["submit"])){
@@ -18,6 +17,8 @@
   }
 
 ?>
+<!DOCTYPE html>
+
 
 <html lang="pt-br">
 

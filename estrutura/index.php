@@ -1,7 +1,7 @@
 <?php
   $pageid = 7;
   include_once('../includes/conexao.php');
-  //include_once('../includes/autenticacao.php');
+  include_once('../includes/autenticacao.php');
 
 
 ?>
@@ -222,10 +222,15 @@
           <!-- Page Heading -->
           <h1 class="h3 mb-2 text-gray-800">Configura partes estruturais e de segurança do sistemas</h1>
           <p class="mb-4">Estrutura e segurança</p>
-          <div class="row">
-
+          <div class="card mb-12 border-bottom-info">
+                <div class="card-body text-center text-lg">
+                  Estrutura de segurança do sistema. Acesso de perfil por página.
+                </div>
+          </div>
+          <div class="row" style="padding-top: 10px;">
+          
             <!-- Início do card -->
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-4 col-md-6 mb-4">
               <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
@@ -248,8 +253,8 @@
               </div>
             </div>
 
-            <!-- Earnings (Annual) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
+            <!-- inicio do card -->
+            <div class="col-xl-4 col-md-6 mb-4">
               <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
@@ -272,14 +277,14 @@
               </div>
             </div>
 
-            <!-- Tasks Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
+            <!-- início do card -->
+            <div class="col-xl-4 col-md-6 mb-4">
               <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                      <a href="#" class="btn btn-primary btn-icon-split btn-lg">
+                      <a href="perfil_arquivo.php" class="btn btn-primary btn-icon-split btn-lg">
                         <span class="icon text-white-50">
                           <i class="fas fa-sitemap"></i>
                         </span>
@@ -295,9 +300,16 @@
                 </div>
               </div>
             </div>
+          </div>
 
-            <!-- Pending Requests Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card mb-12 border-bottom-info">
+                <div class="card-body text-center text-lg">
+                  Estrutura de menu e sub-meu do sistema.
+                </div>
+          </div>
+
+          <div class="row" style="padding-top: 10px;">
+            <div class="col-xl-6 col-md-6 mb-4">
               <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
@@ -307,7 +319,7 @@
                         <span class="icon text-white-50">
                           <i class="fas fa-flag"></i>
                         </span>
-                        <span class="text">XXX_Rservado</span>
+                        <span class="text">Menu</span>
                       </a>
                       </div>
                       
@@ -319,16 +331,29 @@
                 </div>
               </div>
             </div>
-
-
-
-
-
-
-
-
+            <div class="col-xl-6 col-md-6 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                      <a href="#" class="btn btn-primary btn-icon-split btn-lg">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-flag"></i>
+                        </span>
+                        <span class="text">Sub-menu</span>
+                      </a>
+                      </div>
+                      
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-cog fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          
+          </div>
         </div>
 
         <!-- /.container-fluid -->
